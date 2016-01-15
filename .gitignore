@@ -5,3 +5,6 @@ bin-debug/SeaBattle.swf
 bin-debug/SeaBattle-app.xml
 bin-debug/SeaBattle.apk
 .settings/org.eclipse.core.resources.prefs
+bin-debug/data/animations_fp.swf
+bin-debug/data/preloader.swf
+bin-debug/data/source_fp.swf

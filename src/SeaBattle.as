@@ -9,18 +9,21 @@ package
 	import flash.geom.Rectangle;
 	import flash.utils.Timer;
 	
+	import game.ApplicationController;
+	
 	[SWF(frameRate="30")]
-	public class SeaBattle extends Sprite
-	{
+	public class SeaBattle extends Sprite{
+		
 		[Embed(source="../logo/roar_games_logo.png")]
 		private var splashScreenImage:Class;
 		private var splashScreen:Bitmap;
 		
-		private var appScale	:Number = 1; 
-		private var timer		:Timer = new Timer(1000, 1);
+		private var appScale:		Number = 1; 
+		private var timer:			Timer = new Timer(1000, 1);
 		
-		public function SeaBattle()
-		{
+		private var applicationController:ApplicationController;
+		
+		public function SeaBattle(){
 			super();
 			
 			// support autoOrients
@@ -29,12 +32,14 @@ package
 			
 			this.addEventListener(Event.ADDED_TO_STAGE, handlerAddedToStage);
 			
+			applicationController = new ApplicationController(this);
+			
 			defineScale();
 			showSplashScreen();			
 		}
 		
-		private function defineScale():void
-		{
+		private function defineScale():void{
+			
 			var guiSize			:Rectangle = new Rectangle(0, 0, 1280, 720); 
 			var deviceSize		:Rectangle = new Rectangle(0, 0, Math.max(stage.fullScreenWidth, stage.fullScreenHeight), Math.min(stage.fullScreenWidth, stage.fullScreenHeight)); 
 			
@@ -57,8 +62,8 @@ package
 			} 
 		}
 		
-		private function showSplashScreen():void
-		{
+		private function showSplashScreen():void{
+			
 			//			stage.addEventListener(Event.DEACTIVATE, deactivate);
 			splashScreen = new splashScreenImage() as Bitmap;
 			addChild( splashScreen );
@@ -71,23 +76,26 @@ package
 		}
 		
 		
-		private function handlerAddedToStage(e:Event):void
-		{
-			//			removeChild( splashScreen );
+		private function handlerAddedToStage(e:Event):void{
 			
 			timer.addEventListener(TimerEvent.TIMER_COMPLETE, startUpApplication);
 			timer.start();
-			
 		}
 		
-		private function startUpApplication(e:Event):void
-		{
+		private function startUpApplication(e:Event):void{
+			
 			timer.stop();
 			timer.removeEventListener(TimerEvent.TIMER_COMPLETE, startUpApplication);
 			
 			timer = null;
 			
 			this.removeEventListener(Event.ADDED_TO_STAGE, handlerAddedToStage);
+			
+			removeChild( splashScreen );
+		}
+		
+		private function removeSplashScreen():void{
+			
 		}
 	}
 }
