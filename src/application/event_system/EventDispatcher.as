@@ -41,7 +41,7 @@ package application.event_system
 			if(listOfRecipients[messageId]){
 				
 				messageRecipients = listOfRecipients[messageId];
-				messageRecipients.push(listenerModule);
+				listOfRecipients[messageId].push(listenerModule);
 			}
 				
 			else{
@@ -51,9 +51,15 @@ package application.event_system
 			}
 		}
 		
-		public function removeListener():void{
-			
-			
+		public function removeListener(messageId:int, listenerModule:IModule):void{
+						
+			if(listOfRecipients[messageId]){
+				
+				if(listOfRecipients[messageId].indexOf(listenerModule) != -1){
+					
+					listOfRecipients[messageId].splice(listOfRecipients[messageId].indexOf(listenerModule), 1);
+				}
+			}
 		}
 	}
 }

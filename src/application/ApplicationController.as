@@ -47,6 +47,7 @@ package application
 		private function removeSplashScreen():void
 		{
 			linkToEnterPoint.destroySplashScreen();	
+			EventDispatcher.Instance().removeListener(ApplicationViewMessages.PRELOADER_SHOWED, this);			
 		}
 		
 		private function addListeners():void{

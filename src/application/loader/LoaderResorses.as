@@ -27,7 +27,6 @@ package application.loader
 		
 		public function LoaderResorses(){
 			
-			//domain = new ApplicationDomain(ApplicationDomain.currentDomain);
 			setLoadQeue();				
 		}
 		

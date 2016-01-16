@@ -30,18 +30,18 @@ package application.preloader
 			addListeners();
 		}
 		
-		private function preloaderLoaded():void
-		{
+		private function preloaderLoaded():void{
+			
+		}
+		
+		private function loadComplete():void{
+			
 			preloaderView.showBg();
+			EventDispatcher.Instance().removeListener(ApplicationMessages.COMPLETE_LOAD, this);
 		}
 		
-		private function loadComplete():void
-		{
-//			preloaderView
-		}
-		
-		public function preloaderViewShowComplete():void
-		{
+		public function preloaderViewShowComplete():void{
+			
 			EventDispatcher.Instance().sendMessage(ApplicationViewMessages.PRELOADER_SHOWED, null);			
 		}
 		
@@ -69,7 +69,7 @@ package application.preloader
 					
 				case ApplicationMessages.COMPLETE_LOAD:{
 					
-					preloaderLoaded();					
+					loadComplete();					
 					break;
 				}
 			}
