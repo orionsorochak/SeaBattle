@@ -9,12 +9,12 @@ package
 	import flash.geom.Rectangle;
 	import flash.utils.Timer;
 	
-	import game.ApplicationController;
+	import application.ApplicationController;
 	
 	[SWF(frameRate="30")]
 	public class SeaBattle extends Sprite{
 		
-		[Embed(source="../logo/roar_games_logo.png")]
+		[Embed(source="../logo/logo_black_white.png")]
 		private var splashScreenImage:Class;
 		private var splashScreen:Bitmap;
 		
@@ -29,10 +29,9 @@ package
 			// support autoOrients
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
+			stage.color = 0x000000;
 			
-			this.addEventListener(Event.ADDED_TO_STAGE, handlerAddedToStage);
-			
-			applicationController = new ApplicationController(this);
+			this.addEventListener(Event.ADDED_TO_STAGE, handlerAddedToStage);			
 			
 			defineScale();
 			showSplashScreen();			
@@ -84,18 +83,32 @@ package
 		
 		private function startUpApplication(e:Event):void{
 			
+			removeListeners();
+		
+			createApplicationController();
+		}
+		
+		private function removeListeners():void{
 			timer.stop();
 			timer.removeEventListener(TimerEvent.TIMER_COMPLETE, startUpApplication);
 			
 			timer = null;
 			
 			this.removeEventListener(Event.ADDED_TO_STAGE, handlerAddedToStage);
-			
-			removeChild( splashScreen );
 		}
 		
-		private function removeSplashScreen():void{
+		public function destroySplashScreen():void{
 			
+			if(splashScreen && this.contains(splashScreen)){
+				
+				removeChild( splashScreen );
+				splashScreen = null;
+			}		
+		}
+		
+		private function createApplicationController():void{
+			
+			applicationController = new ApplicationController(this);
 		}
 	}
 }

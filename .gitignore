@@ -8,3 +8,6 @@ bin-debug/SeaBattle.apk
 bin-debug/data/animations_fp.swf
 bin-debug/data/preloader.swf
 bin-debug/data/source_fp.swf
+bin-debug/com/greensock/loading/changelog.txt
+bin-debug/com/greensock/changelog.txt
+bin-debug/com/greensock/easing/easing_readme.txt
