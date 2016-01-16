@@ -2,7 +2,7 @@ package application.preloader
 {
 	import application.event_system.EventDispatcher;
 	import application.event_system.messages.ApplicationMessages;
-	import application.event_system.messages.ApplicationViewMessages;
+	import application.event_system.messages.PreloaderMessages;
 	import application.interfaces.IModule;
 	
 	import flash.display.Sprite;
@@ -20,29 +20,29 @@ package application.preloader
 			init();
 		}
 		
-		private function init():void{			
+		public function init():void{			
 				
 			preloaderStage = new Sprite();
 			mainStage.addChild(preloaderStage);
 			
-			preloaderView = new PreloaderView(this, preloaderStage);
+			preloaderView = new PreloaderView(preloaderStage);			
 			
 			addListeners();
 		}
 		
 		private function preloaderLoaded():void{
-			
+			preloaderView.show();
 		}
 		
 		private function loadComplete():void{
 			
-			preloaderView.showBg();
-			EventDispatcher.Instance().removeListener(ApplicationMessages.COMPLETE_LOAD, this);
+			EventDispatcher.Instance().sendMessage(PreloaderMessages.END_SHOW_PRELOADER_PAGE,   null);
+			EventDispatcher.Instance().removeListener(ApplicationMessages.COMPLETE_LOAD, 		this);
 		}
 		
 		public function preloaderViewShowComplete():void{
-			
-			EventDispatcher.Instance().sendMessage(ApplicationViewMessages.PRELOADER_SHOWED, null);			
+										
+			EventDispatcher.Instance().removeListener(PreloaderMessages.PRELOADER_PAGE_IS_ACTIVE, 	this);
 		}
 		
 		private function addListeners():void{
@@ -50,6 +50,8 @@ package application.preloader
 			EventDispatcher.Instance().addListener(ApplicationMessages.PROGRESS_LOAD, 			this);
 			EventDispatcher.Instance().addListener(ApplicationMessages.COMPLETE_LOAD_PRELOADER, this);
 			EventDispatcher.Instance().addListener(ApplicationMessages.COMPLETE_LOAD, 			this);
+			
+			EventDispatcher.Instance().addListener(PreloaderMessages.PRELOADER_PAGE_IS_ACTIVE, 	this);
 		}
 		
 		public function receiveMessage(messageId:int, data:Object):void{
@@ -63,7 +65,7 @@ package application.preloader
 					
 				case ApplicationMessages.COMPLETE_LOAD_PRELOADER:{
 					
-					//preloaderLoaded();					
+					preloaderLoaded();					
 					break;
 				}
 					
@@ -72,7 +74,28 @@ package application.preloader
 					loadComplete();					
 					break;
 				}
+					
+				case PreloaderMessages.PRELOADER_PAGE_IS_ACTIVE:{
+					
+					preloaderViewShowComplete();					
+					break;
+				}	
 			}
+		}
+		
+		public function destroy():void{
+			
+			if(preloaderView){
+				
+				preloaderView.destroy();
+				preloaderView = null;
+			}
+					
+			if(preloaderStage && mainStage.contains(preloaderStage)){
+				
+				mainStage.removeChild(preloaderStage);
+				preloaderStage = null;
+			}			
 		}
 	}
 }

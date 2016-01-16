@@ -9,6 +9,8 @@ package application
 		public static var ANIMATIONS_URL:					String = "data/animations_fp.swf";
 		public static var SQL_FILE_URL:						String = "data/warship.sqlite";
 		
+		public static var SHOWING_TIME_SPLASH_SCREEN:		Number = 1000;	
+		public static var SHOWING_TIME_PRELOADER:			Number = 1000;	
 		
 		public static var SERVER_URL:						String = "http://sb-stable.kek.net.ua/";
 		public static var SERVER_PORT:						String = "";

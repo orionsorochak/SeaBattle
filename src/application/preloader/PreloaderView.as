@@ -1,5 +1,7 @@
 package application.preloader
 {
+	import application.event_system.EventDispatcher;
+	import application.event_system.messages.PreloaderMessages;
 	import application.interfaces.IModule;
 	
 	import com.greensock.TweenLite;
@@ -8,40 +10,50 @@ package application.preloader
 	import flash.display.Sprite;
 	import flash.system.ApplicationDomain;
 
-	public class PreloaderView
-	{		
+	public class PreloaderView{		
+		
 		private var preloaderClasName:	String = "viewLoaderWindow";
 		
-		private var preloaderController:PreloaderController;
-		private var preloaderStage:		Sprite;
-		
+		private var preloaderStage:		Sprite;		
 		private var background:			MovieClip;
 		
 		private var tween:				TweenLite;
 		
-		public function PreloaderView(_preloaderController:PreloaderController, _preloaderStage:Sprite)
-		{
-			preloaderController = _preloaderController;
+		public function PreloaderView(_preloaderStage:Sprite){
+			
 			preloaderStage 		= _preloaderStage;
 		}
 		
-		public function showBg():void
-		{
+		public function show():void{
+			
 			var elementClass:Class = ApplicationDomain.currentDomain.getDefinition(preloaderClasName) as Class;
 			background = new elementClass();			
 			background.alpha = 0;
 			
 			preloaderStage.addChild(background);
 			
-			tween = TweenLite.to(background, 0.5, {alpha:1, onComplete:onTweenComplete});
+			tween = TweenLite.to(background, 0.5, {alpha:1, onComplete:onShowComplete});
 		}
 		
-		private function onTweenComplete():void
-		{
+		private function onShowComplete():void{
+			
 			tween.kill();
 			tween = null;
 			
-			preloaderController.preloaderViewShowComplete();
+			EventDispatcher.Instance().sendMessage(PreloaderMessages.PRELOADER_PAGE_IS_ACTIVE, null);			
+		}
+		
+		public function destroy():void{
+			
+			if(background && preloaderStage.contains(background)){
+				preloaderStage.removeChild(background);
+				background = null
+			}
+			
+			if(tween){
+				tween.kill();
+				tween = null;
+			}
 		}
 	}
 }

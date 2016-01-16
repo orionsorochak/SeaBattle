@@ -26,11 +26,10 @@ package application.event_system
 			
 			if(listOfRecipients[messageId]){
 				
-				var messageRecipients:Vector.<IModule> = listOfRecipients[messageId];
+				var messageRecipients:Vector.<IModule> = listOfRecipients[messageId].concat();
 				
-				for (var i:int = 0; i < messageRecipients.length; i++){
-					messageRecipients[i].receiveMessage(messageId, data);
-				}				
+				for (var i:int = 0; i < messageRecipients.length; i++)
+					messageRecipients[i].receiveMessage(messageId, data);		
 			}
 		}
 		

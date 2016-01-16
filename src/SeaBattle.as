@@ -1,5 +1,8 @@
 package
 {
+	import application.AppGlobalVariables;
+	import application.ApplicationController;
+	
 	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -9,8 +12,6 @@ package
 	import flash.geom.Rectangle;
 	import flash.utils.Timer;
 	
-	import application.ApplicationController;
-	
 	[SWF(frameRate="30")]
 	public class SeaBattle extends Sprite{
 		
@@ -19,8 +20,7 @@ package
 		private var splashScreen:Bitmap;
 		
 		private var appScale:		Number = 1; 
-		private var timer:			Timer = new Timer(1000, 1);
-		
+			
 		private var applicationController:ApplicationController;
 		
 		public function SeaBattle(){
@@ -77,26 +77,10 @@ package
 		
 		private function handlerAddedToStage(e:Event):void{
 			
-			timer.addEventListener(TimerEvent.TIMER_COMPLETE, startUpApplication);
-			timer.start();
-		}
-		
-		private function startUpApplication(e:Event):void{
-			
-			removeListeners();
-		
+			this.removeEventListener(Event.ADDED_TO_STAGE, handlerAddedToStage);
 			createApplicationController();
 		}
-		
-		private function removeListeners():void{
-			timer.stop();
-			timer.removeEventListener(TimerEvent.TIMER_COMPLETE, startUpApplication);
 			
-			timer = null;
-			
-			this.removeEventListener(Event.ADDED_TO_STAGE, handlerAddedToStage);
-		}
-		
 		public function destroySplashScreen():void{
 			
 			if(splashScreen && this.contains(splashScreen)){
