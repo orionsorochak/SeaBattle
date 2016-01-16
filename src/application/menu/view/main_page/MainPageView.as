@@ -1,5 +1,6 @@
 package application.menu.view.main_page
 {
+	import application.AppGlobalVariables;
 	import application.event_system.EventDispatcher;
 	import application.event_system.messages.MenuMessages;
 	import application.event_system.messages.PreloaderMessages;
@@ -32,7 +33,7 @@ package application.menu.view.main_page
 			
 			menuStage.addChild(linkToTable);
 			
-			tween = TweenLite.to(linkToTable, 0.5, {alpha:1, onComplete:onShowComplete});
+			tween = TweenLite.to(linkToTable, AppGlobalVariables.PAGE_FADE_ODE_TIME, {alpha:1, onComplete:onShowComplete});
 		}
 		
 		public function onShowComplete():void{

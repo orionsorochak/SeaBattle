@@ -1,5 +1,6 @@
 package application.menu.view.level_page
 {
+	import application.AppGlobalVariables;
 	import application.event_system.EventDispatcher;
 	import application.event_system.messages.MenuMessages;
 	import application.interfaces.IPage;
@@ -31,7 +32,7 @@ package application.menu.view.level_page
 			
 			menuStage.addChild(linkToTable);
 			
-			tween = TweenLite.to(linkToTable, 0.5, {alpha:1, onComplete:onShowComplete});
+			tween = TweenLite.to(linkToTable, AppGlobalVariables.PAGE_FADE_ODE_TIME, {alpha:1, onComplete:onShowComplete});
 		}
 		
 		public function onShowComplete():void{
@@ -49,13 +50,15 @@ package application.menu.view.level_page
 		}
 		
 		private function buttonClickHandler(e:Event):void{
-			EventDispatcher.Instance().sendMessage(MenuMessages.MAIN_MENU_BTN_CLICKED, e.target.name);	
+			EventDispatcher.Instance().sendMessage(MenuMessages.LEVEL_BTN_CLICKED, e.target.name);	
 		}
 		
 		public function destoy():void{
 			
-			tween.kill();
-			tween = null;
+			if(tween){
+				tween.kill();
+				tween = null;
+			}			
 			
 			if(linkToTable && menuStage.contains(linkToTable)){
 				

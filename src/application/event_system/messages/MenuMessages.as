@@ -7,5 +7,7 @@ package application.event_system.messages
 		public static var MENU_PAGE_IS_ACTIVE:		int = IdCreator.getUid();
 		
 		public static var MAIN_MENU_BTN_CLICKED:	int = IdCreator.getUid();
+		public static var LEVEL_BTN_CLICKED:		int = IdCreator.getUid();
+		public static var PROFILE_BTN_CLICKED:		int = IdCreator.getUid();
 	}
 }

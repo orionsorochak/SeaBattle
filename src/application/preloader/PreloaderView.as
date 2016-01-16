@@ -1,5 +1,6 @@
 package application.preloader
 {
+	import application.AppGlobalVariables;
 	import application.event_system.EventDispatcher;
 	import application.event_system.messages.PreloaderMessages;
 	import application.interfaces.IModule;
@@ -32,7 +33,7 @@ package application.preloader
 			
 			preloaderStage.addChild(background);
 			
-			tween = TweenLite.to(background, 0.5, {alpha:1, onComplete:onShowComplete});
+			tween = TweenLite.to(background, AppGlobalVariables.PAGE_FADE_ODE_TIME, {alpha:1, onComplete:onShowComplete});
 		}
 		
 		private function onShowComplete():void{

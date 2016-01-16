@@ -12,6 +12,8 @@ package application
 		public static var SHOWING_TIME_SPLASH_SCREEN:		Number = 1000;	
 		public static var SHOWING_TIME_PRELOADER:			Number = 1000;	
 		
+		public static var PAGE_FADE_ODE_TIME:				Number = 0.5;	
+		
 		public static var SERVER_URL:						String = "http://sb-stable.kek.net.ua/";
 		public static var SERVER_PORT:						String = "";
 		public static var CONNECTION_TYPE:					String = "http";

@@ -6,9 +6,12 @@ package application.menu
 	import application.event_system.messages.MenuMessages;
 	import application.event_system.messages.PreloaderMessages;
 	import application.interfaces.IModule;
+	import application.menu.view.level_page.LevelPageVariables;
 	import application.menu.view.level_page.LevelPageView;
 	import application.menu.view.main_page.MainPageVariables;
 	import application.menu.view.main_page.MainPageView;
+	import application.menu.view.profile.ProfilePageVariables;
+	import application.menu.view.profile.ProfilePageView;
 	
 	import flash.display.Sprite;
 
@@ -74,15 +77,70 @@ package application.menu
 					
 					break;
 				}
+					
+				case MainPageVariables.PROFILER_BTN_NAME:
+				{
+					menuData.previousPage = menuData.currentPage;
+					
+					menuData.currentPage = new ProfilePageView(menuStage);
+					menuData.currentPage.show();
+					
+					break;
+				}
+			}
+		}
+		
+		private function levelBtnClicked(buttonName:String):void{
+			
+			switch(buttonName){
+				
+				case LevelPageVariables.LOW_BTN_NAME:{
+								
+					break;
+				}
+				case LevelPageVariables.MIDDLE_BTN_NAME:{
+					
+					break;
+				}
+				case LevelPageVariables.HIGH_BTN_NAME:{
+					
+					break;
+				}
+				case LevelPageVariables.BACK_BTN_NAME:{
+					
+					menuData.previousPage = menuData.currentPage;
+					
+					menuData.currentPage = new MainPageView(menuStage);
+					menuData.currentPage.show();
+					
+					break;
+				}
+			}
+		}
+		
+		private function profileBtnClicked(buttonName:String):void{
+			
+			switch(buttonName){
+				
+				case ProfilePageVariables.BACK_BTN_NAME:{
+					
+					menuData.previousPage = menuData.currentPage;
+					
+					menuData.currentPage = new MainPageView(menuStage);
+					menuData.currentPage.show();
+					
+					break;
+				}
 			}
 		}
 		
 		private function addListeners():void{
 			
-			EventDispatcher.Instance().addListener(ApplicationMessages.SHOW_MENU,   	this);	
-			
+			EventDispatcher.Instance().addListener(ApplicationMessages.SHOW_MENU,   	this);									
+			EventDispatcher.Instance().addListener(MenuMessages.MENU_PAGE_IS_ACTIVE, 	this);
 			EventDispatcher.Instance().addListener(MenuMessages.MAIN_MENU_BTN_CLICKED,  this);
-			EventDispatcher.Instance().addListener(MenuMessages.MENU_PAGE_IS_ACTIVE,  this);
+			EventDispatcher.Instance().addListener(MenuMessages.LEVEL_BTN_CLICKED,  	this);
+			EventDispatcher.Instance().addListener(MenuMessages.PROFILE_BTN_CLICKED,  	this);
 		}
 		
 		public function receiveMessage(messageId:int, data:Object):void{
@@ -100,6 +158,18 @@ package application.menu
 				case MenuMessages.MAIN_MENU_BTN_CLICKED:{
 					
 					mainMenuBtnClicked(data as String);
+					break;
+				}
+					
+				case MenuMessages.LEVEL_BTN_CLICKED:{
+					
+					levelBtnClicked(data as String);
+					break;
+				}
+					
+				case MenuMessages.PROFILE_BTN_CLICKED:{
+					
+					levelBtnClicked(data as String);
 					break;
 				}
 			}
