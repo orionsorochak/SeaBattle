@@ -40,6 +40,7 @@ package application
 		private function createMainStage():void
 		{
 			mainStage = new Sprite();
+			mainStage.scaleX = mainStage.scaleY = linkToEnterPoint.getAppScale();
 			linkToEnterPoint.addChild(mainStage);
 		}
 		

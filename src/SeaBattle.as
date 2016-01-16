@@ -106,6 +106,11 @@ package
 			}		
 		}
 		
+		public function getAppScale():Number
+		{
+			return appScale;
+		}
+		
 		private function createApplicationController():void{
 			
 			applicationController = new ApplicationController(this);

@@ -105,7 +105,7 @@
 
         <!-- The render mode for the app (either auto, cpu, gpu, or direct). Optional. Default auto -->
 
-        <!-- <renderMode></renderMode> -->
+        <renderMode>gpu</renderMode>
 
         <!-- Whether the default direct mode rendering context allocates storage for depth and stencil buffers.  Optional.  Default false. -->
         <!-- <depthAndStencil></depthAndStencil> -->
@@ -115,9 +115,9 @@
 
 		<!-- Display Resolution for the app (either "standard" or "high"). Optional, OSX-only. Default "standard" -->
 		<!-- <requestedDisplayResolution></requestedDisplayResolution> -->
-	<autoOrients>true</autoOrients>
-        <fullScreen>false</fullScreen>
-        <visible>true</visible>
+	<autoOrients>false</autoOrients>
+        <fullScreen>true</fullScreen>
+        <visible>false</visible>
     </initialWindow>
 
 	<!-- We recommend omitting the supportedProfiles element, -->
@@ -274,6 +274,7 @@
 	<!-- End of the schema for adding the android specific tags in AndroidManifest.xml file -->
 
 <android>
+ 		<colorDepth>32bit</colorDepth>
         <manifestAdditions><![CDATA[
 			<manifest android:installLocation="auto">
 			    <!--See the Adobe AIR documentation for more information about setting Google Android permissions-->
