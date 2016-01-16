@@ -13,11 +13,9 @@ package application.loader
 	import flash.system.ApplicationDomain;
 	import flash.system.LoaderContext;
 	
-	[Event(name="complete", 		type="flash.events.Event")]
-	[Event(name="progress ", 		type="flash.events.ProgressEvent")]
 	public class LoaderResorses{
 		
-		public static const FILE_LOADED:	String = "file_loaded";
+		public static const PRELOADER_URL:	String = "app:/data/preloader.swf";
 		
 		private var filesQueue:			Vector.<String>;
 		
@@ -105,7 +103,7 @@ package application.loader
 		
 		private function handlerCompleteLoadFile(e:Event):void{
 			
-			if(e.currentTarget.url == "app:/data/preloader.swf")
+			if(e.currentTarget.url == PRELOADER_URL)
 				EventDispatcher.Instance().sendMessage(ApplicationMessages.COMPLETE_LOAD_PRELOADER, null);				
 		}
 	}

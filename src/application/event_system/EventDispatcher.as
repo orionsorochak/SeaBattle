@@ -28,13 +28,10 @@ package application.event_system
 				
 				var messageRecipients:Vector.<IModule> = listOfRecipients[messageId];
 				
-				for (var i:int = 0; i < messageRecipients.length; i++) 
-				{
+				for (var i:int = 0; i < messageRecipients.length; i++){
 					messageRecipients[i].receiveMessage(messageId, data);
 				}				
 			}
-			
-			trace(listOfRecipients);
 		}
 		
 		public function addListener(messageId:int, listenerModule:IModule):void{
@@ -45,17 +42,12 @@ package application.event_system
 				
 				messageRecipients = listOfRecipients[messageId];
 				messageRecipients.push(listenerModule);
-				
-				trace(listOfRecipients);
 			}
 				
 			else{
 								
-				messageRecipients.push(listenerModule);
-				
+				messageRecipients.push(listenerModule);				
 				listOfRecipients[messageId] = messageRecipients;
-				
-				trace(listOfRecipients);
 			}
 		}
 		
