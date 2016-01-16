@@ -1,9 +1,11 @@
 package application
 {
+	import application.core.ApplicationModule;
+	import application.core.events.CoreEvents;
 	import application.event_system.EventDispatcher;
 	import application.event_system.messages.ApplicationMessages;
-	import application.event_system.messages.PreloaderMessages;
 	import application.event_system.messages.MenuMessages;
+	import application.event_system.messages.PreloaderMessages;
 	import application.interfaces.IModule;
 	import application.loader.LoaderResorses;
 	import application.menu.MenuController;
@@ -43,16 +45,30 @@ package application
 			init();
 		}
 		
-		public function init():void{
+		public function init():void
+		{
 					
 			addListeners();
 			
 			createMainStage();
 			
+			ApplicationModule.getInstance().init();
+			
+			/*
+			Moved to startupApplication method, that runs after IApplicationModule sends event CoreEvents.APP_MODULE_INIT_COMPLETE
+			
 			loaderResources = new LoaderResorses();
 			loaderResources.load();
 			
-			preloaderController = new PreloaderController(applicationStage);			
+			preloaderController = new PreloaderController(applicationStage);*/			
+		}
+		
+		private function startupApplication():void
+		{
+			loaderResources = new LoaderResorses();
+			loaderResources.load();
+			
+			preloaderController = new PreloaderController(applicationStage);
 		}
 		
 		private function createMainStage():void
@@ -92,6 +108,8 @@ package application
 		
 		private function addListeners():void{
 			
+			EventDispatcher.Instance().addListener(CoreEvents.APP_MODULE_INIT_COMPLETE,					this);
+			
 			EventDispatcher.Instance().addListener(MenuMessages.MENU_PAGE_IS_ACTIVE,					this);	
 			EventDispatcher.Instance().addListener(ApplicationMessages.REMOVE_PRELOADER,				this);
 			
@@ -118,6 +136,12 @@ package application
 				case ApplicationMessages.REMOVE_PRELOADER:
 				{
 					removePreloader();
+					break;
+				}
+					
+				case CoreEvents.APP_MODULE_INIT_COMPLETE:
+				{
+					startupApplication();
 					break;
 				}
 			}
