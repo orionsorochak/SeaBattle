@@ -1,6 +1,6 @@
 package application.core.auth
 {
-	import application.core.data.IAuthUserData;
+	import application.core.interfaces.IAuthUserData;
 	
 	public class AuthUserData implements IAuthUserData
 	{

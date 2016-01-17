@@ -1,7 +1,8 @@
 package application.core.auth
 {
-	import application.core.events.CoreEvents;
+	import application.event_system.messages.CoreMessages;
 	import application.event_system.EventDispatcher;
+	import application.core.interfaces.IAuthManager;
 
 	public class AuthorizationManager implements IAuthManager
 	{
@@ -28,7 +29,7 @@ package application.core.auth
 				
 				_status = GOOGLE_PLAY;
 				
-				EventDispatcher.Instance().sendMessage( CoreEvents.AUTHORIZATION_COMPLETE, user );
+				EventDispatcher.Instance().sendMessage( CoreMessages.AUTHORIZATION_COMPLETE, user );
 			}
 		}
 		
@@ -43,7 +44,7 @@ package application.core.auth
 				
 				_status = ANONYMOUS;
 				
-				EventDispatcher.Instance().sendMessage( CoreEvents.AUTHORIZATION_COMPLETE, user );
+				EventDispatcher.Instance().sendMessage( CoreMessages.AUTHORIZATION_COMPLETE, user );
 			}
 		}
 	}

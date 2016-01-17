@@ -1,17 +1,23 @@
 package application.preloader
 {
+	import application.AppGlobalVariables;
 	import application.event_system.EventDispatcher;
 	import application.event_system.messages.ApplicationMessages;
 	import application.event_system.messages.PreloaderMessages;
 	import application.interfaces.IModule;
 	
 	import flash.display.Sprite;
+	import flash.events.Event;
+	import flash.events.TimerEvent;
+	import flash.utils.Timer;
 
 	public class PreloaderController implements IModule{
 		
 		private var mainStage:				Sprite;
 		private var preloaderView:			PreloaderView;
 		private var preloaderStage:			Sprite;
+		
+		private var timeShowing:			Timer = new Timer(AppGlobalVariables.SHOWING_TIME_PRELOADER, 1);
 		
 		public function PreloaderController(_mainStage:Sprite){
 			
@@ -36,8 +42,22 @@ package application.preloader
 		
 		private function loadComplete():void{
 			
-			EventDispatcher.Instance().sendMessage(PreloaderMessages.END_SHOW_PRELOADER_PAGE,   null);
+			setTimeForShowingPreloader();
 			EventDispatcher.Instance().removeListener(ApplicationMessages.COMPLETE_LOAD, 		this);
+		}
+		
+		private function setTimeForShowingPreloader():void
+		{
+			timeShowing.addEventListener(TimerEvent.TIMER_COMPLETE, endTime);
+			timeShowing.start();
+		}
+		
+		private function endTime(e:Event):void
+		{
+			timeShowing.stop();
+			timeShowing.removeEventListener(TimerEvent.TIMER_COMPLETE, endTime);
+			
+			EventDispatcher.Instance().sendMessage(PreloaderMessages.END_SHOW_PRELOADER_PAGE, null);
 		}
 		
 		public function preloaderViewShowComplete():void{

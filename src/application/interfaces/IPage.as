@@ -4,6 +4,6 @@ package application.interfaces
 	{
 		function show():void;
 		function onShowComplete():void;
-		function destoy():void;
+		function destroy():void;
 	}
 }

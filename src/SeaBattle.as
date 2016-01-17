@@ -21,7 +21,8 @@ package
 		
 		private var appScale:		Number = 1; 
 			
-		private var applicationController:ApplicationController;
+		private var applicationController:  ApplicationController;
+		private var timeShowing:			Timer = new Timer(AppGlobalVariables.SHOWING_TIME_SPLASH_SCREEN, 1);
 		
 		public function SeaBattle(){
 			super();
@@ -78,7 +79,9 @@ package
 		private function handlerAddedToStage(e:Event):void{
 			
 			this.removeEventListener(Event.ADDED_TO_STAGE, handlerAddedToStage);
-			createApplicationController();
+			
+			timeShowing.addEventListener(TimerEvent.TIMER, createApplicationController);	
+			timeShowing.start();
 		}
 			
 		public function destroySplashScreen():void{
@@ -95,7 +98,10 @@ package
 			return appScale;
 		}
 		
-		private function createApplicationController():void{
+		private function createApplicationController(e:Event):void{
+			
+			timeShowing.stop();
+			timeShowing.removeEventListener(TimerEvent.TIMER, createApplicationController);	
 			
 			applicationController = new ApplicationController(this);
 		}

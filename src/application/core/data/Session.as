@@ -1,6 +1,6 @@
 package application.core.data
 {
-	import application.core.data.profile.IUserProfile;
+	import application.core.interfaces.IUserProfile;
 
 	public class Session
 	{

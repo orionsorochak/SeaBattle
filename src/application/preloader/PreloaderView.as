@@ -4,6 +4,7 @@ package application.preloader
 	import application.event_system.EventDispatcher;
 	import application.event_system.messages.PreloaderMessages;
 	import application.interfaces.IModule;
+	import application.interfaces.IPage;
 	
 	import com.greensock.TweenLite;
 	
@@ -11,7 +12,7 @@ package application.preloader
 	import flash.display.Sprite;
 	import flash.system.ApplicationDomain;
 
-	public class PreloaderView{		
+	public class PreloaderView implements IPage{		
 		
 		private var preloaderClasName:	String = "viewLoaderWindow";
 		
@@ -36,7 +37,7 @@ package application.preloader
 			tween = TweenLite.to(background, AppGlobalVariables.PAGE_FADE_ODE_TIME, {alpha:1, onComplete:onShowComplete});
 		}
 		
-		private function onShowComplete():void{
+		public function onShowComplete():void{
 			
 			tween.kill();
 			tween = null;

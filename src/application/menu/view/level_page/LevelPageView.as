@@ -53,7 +53,7 @@ package application.menu.view.level_page
 			EventDispatcher.Instance().sendMessage(MenuMessages.LEVEL_BTN_CLICKED, e.target.name);	
 		}
 		
-		public function destoy():void{
+		public function destroy():void{
 			
 			if(tween){
 				tween.kill();

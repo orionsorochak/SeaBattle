@@ -1,7 +1,6 @@
 package application
 {
-	import application.core.ApplicationModule;
-	import application.core.events.CoreEvents;
+	import application.event_system.messages.CoreMessages;
 	import application.event_system.EventDispatcher;
 	import application.event_system.messages.ApplicationMessages;
 	import application.event_system.messages.MenuMessages;
@@ -26,25 +25,13 @@ package application
 		private var preloaderController:	PreloaderController;
 		private var menuController:			MenuController;
 		
-		private var timerToShowSplashScreen:Timer = new Timer(AppGlobalVariables.SHOWING_TIME_SPLASH_SCREEN, 1);
-		private var timerToShowMenu:		Timer = new Timer(AppGlobalVariables.SHOWING_TIME_PRELOADER, 1);
-		
 		public function ApplicationController(_linkToEnterPoint:SeaBattle){
 			
 			linkToEnterPoint = _linkToEnterPoint;
 			
-			timerToShowSplashScreen.addEventListener(TimerEvent.TIMER, complateShowingSplashScreen);	
-			timerToShowSplashScreen.start();
-		}
-		
-		private function complateShowingSplashScreen(e:Event):void
-		{
-			timerToShowSplashScreen.stop();
-			timerToShowSplashScreen.removeEventListener(TimerEvent.TIMER, complateShowingSplashScreen);	
-			
 			init();
 		}
-		
+				
 		public function init():void
 		{
 					
@@ -83,18 +70,9 @@ package application
 			linkToEnterPoint.destroySplashScreen();	
 			EventDispatcher.Instance().removeListener(PreloaderMessages.PRELOADER_PAGE_IS_ACTIVE, this);			
 		}
-		
-		private function setTimeForShowingpreloader():void
-		{
-			timerToShowMenu.addEventListener(TimerEvent.TIMER_COMPLETE, addMenu);
-			timerToShowMenu.start();
-		}
-		
-		private function addMenu(e:Event):void
-		{
-			timerToShowMenu.stop();
-			timerToShowMenu.removeEventListener(TimerEvent.TIMER_COMPLETE, addMenu);
-			
+				
+		private function addMenu():void
+		{			
 			menuController	= new MenuController(applicationStage);
 		}
 		
@@ -108,11 +86,9 @@ package application
 		
 		private function addListeners():void{
 			
-			EventDispatcher.Instance().addListener(CoreEvents.APP_MODULE_INIT_COMPLETE,					this);
-			
+			EventDispatcher.Instance().addListener(CoreMessages.APP_MODULE_INIT_COMPLETE,				this);			
 			EventDispatcher.Instance().addListener(MenuMessages.MENU_PAGE_IS_ACTIVE,					this);	
-			EventDispatcher.Instance().addListener(ApplicationMessages.REMOVE_PRELOADER,				this);
-			
+			EventDispatcher.Instance().addListener(ApplicationMessages.REMOVE_PRELOADER,				this);			
 			EventDispatcher.Instance().addListener(PreloaderMessages.PRELOADER_PAGE_IS_ACTIVE,			this);
 			EventDispatcher.Instance().addListener(PreloaderMessages.END_SHOW_PRELOADER_PAGE,			this);
 		}
@@ -129,7 +105,7 @@ package application
 					
 				case PreloaderMessages.END_SHOW_PRELOADER_PAGE:
 				{
-					setTimeForShowingpreloader();
+					addMenu();
 					break;
 				}
 					
@@ -139,7 +115,7 @@ package application
 					break;
 				}
 					
-				case CoreEvents.APP_MODULE_INIT_COMPLETE:
+				case CoreMessages.APP_MODULE_INIT_COMPLETE:
 				{
 					startupApplication();
 					break;

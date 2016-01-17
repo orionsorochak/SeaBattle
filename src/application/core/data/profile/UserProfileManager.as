@@ -1,6 +1,7 @@
 package application.core.data.profile
 {
-	import application.core.data.IAuthUserData;
+	import application.core.interfaces.IAuthUserData;
+	import application.core.interfaces.IUserProfile;
 
 	public class UserProfileManager implements IUserProfile
 	{

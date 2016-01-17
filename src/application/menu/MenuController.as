@@ -59,7 +59,7 @@ package application.menu
 		private function removePreviousPage():void{
 			
 			if(menuData.previousPage){
-				menuData.previousPage.destoy();
+				menuData.previousPage.destroy();
 				menuData.previousPage = null;
 			}
 		}
