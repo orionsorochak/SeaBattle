@@ -3,6 +3,7 @@ package application.menu
 	import application.ApplicationController;
 	import application.event_system.EventDispatcher;
 	import application.event_system.messages.ApplicationMessages;
+	import application.event_system.messages.CoreMessages;
 	import application.event_system.messages.MenuMessages;
 	import application.event_system.messages.PreloaderMessages;
 	import application.interfaces.IModule;
@@ -75,6 +76,8 @@ package application.menu
 					menuData.currentPage = new LevelPageView(menuStage);
 					menuData.currentPage.show();
 					
+					EventDispatcher.Instance().sendMessage(CoreMessages.INIT_GAME_CORE, null);
+					
 					break;
 				}
 					
@@ -95,15 +98,18 @@ package application.menu
 			switch(buttonName){
 				
 				case LevelPageVariables.LOW_BTN_NAME:{
-								
+					
+					EventDispatcher.Instance().sendMessage(ApplicationMessages.SHOW_GAME, null);
 					break;
 				}
 				case LevelPageVariables.MIDDLE_BTN_NAME:{
 					
+					EventDispatcher.Instance().sendMessage(ApplicationMessages.SHOW_GAME, null);
 					break;
 				}
 				case LevelPageVariables.HIGH_BTN_NAME:{
 					
+					EventDispatcher.Instance().sendMessage(ApplicationMessages.SHOW_GAME, null);
 					break;
 				}
 				case LevelPageVariables.BACK_BTN_NAME:{

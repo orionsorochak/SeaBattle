@@ -1,10 +1,11 @@
 package application
 {
-	import application.event_system.messages.CoreMessages;
 	import application.event_system.EventDispatcher;
 	import application.event_system.messages.ApplicationMessages;
+	import application.event_system.messages.CoreMessages;
 	import application.event_system.messages.MenuMessages;
 	import application.event_system.messages.PreloaderMessages;
+	import application.game.GameController;
 	import application.interfaces.IModule;
 	import application.loader.LoaderResorses;
 	import application.menu.MenuController;
@@ -24,6 +25,7 @@ package application
 		
 		private var preloaderController:	PreloaderController;
 		private var menuController:			MenuController;
+		private var gameController:			GameController;
 		
 		public function ApplicationController(_linkToEnterPoint:SeaBattle){
 			
@@ -84,13 +86,19 @@ package application
 			EventDispatcher.Instance().removeListener(ApplicationMessages.REMOVE_PRELOADER,		this);
 		}
 		
+		private function addGame():void
+		{			
+			gameController	= new GameController(applicationStage);
+		}
+		
 		private function addListeners():void{
 			
-			EventDispatcher.Instance().addListener(CoreMessages.APP_MODULE_INIT_COMPLETE,				this);			
-			EventDispatcher.Instance().addListener(MenuMessages.MENU_PAGE_IS_ACTIVE,					this);	
-			EventDispatcher.Instance().addListener(ApplicationMessages.REMOVE_PRELOADER,				this);			
-			EventDispatcher.Instance().addListener(PreloaderMessages.PRELOADER_PAGE_IS_ACTIVE,			this);
-			EventDispatcher.Instance().addListener(PreloaderMessages.END_SHOW_PRELOADER_PAGE,			this);
+			EventDispatcher.Instance().addListener(CoreMessages.APP_MODULE_INIT_COMPLETE,			this);			
+			EventDispatcher.Instance().addListener(MenuMessages.MENU_PAGE_IS_ACTIVE,				this);	
+			EventDispatcher.Instance().addListener(ApplicationMessages.REMOVE_PRELOADER,			this);			
+			EventDispatcher.Instance().addListener(PreloaderMessages.PRELOADER_PAGE_IS_ACTIVE,		this);
+			EventDispatcher.Instance().addListener(PreloaderMessages.END_SHOW_PRELOADER_PAGE,		this);
+			EventDispatcher.Instance().addListener(ApplicationMessages.SHOW_GAME,					this);
 		}
 		
 		public function receiveMessage(messageId:int, data:Object):void{
@@ -119,6 +127,10 @@ package application
 				{
 					startupApplication();
 					break;
+				}
+									
+				case ApplicationMessages.SHOW_GAME:{
+					addGame();
 				}
 			}
 		}

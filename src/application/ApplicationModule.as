@@ -1,14 +1,17 @@
 package application
 {
 	import application.core.auth.AuthorizationManager;
-	import application.core.interfaces.IAuthManager;
-	import application.core.interfaces.IAuthUserData;
 	import application.core.data.Session;
 	import application.core.data.profile.UserProfileManager;
-	import application.event_system.messages.CoreMessages;
+	import application.core.game.GameCore;
+	import application.core.interfaces.IAuthManager;
+	import application.core.interfaces.IAuthUserData;
 	import application.event_system.EventDispatcher;
-	import application.interfaces.IModule;
+	import application.event_system.messages.ApplicationMessages;
+	import application.event_system.messages.CoreMessages;
+	import application.event_system.messages.MenuMessages;
 	import application.interfaces.IApplicationModule;
+	import application.interfaces.IModule;
 
 	public class ApplicationModule implements IModule, IApplicationModule
 	{
@@ -17,6 +20,7 @@ package application
 		private var _authManager:		IAuthManager;
 		
 		private var _profileManager:	UserProfileManager;
+		private var gameCore:			GameCore;
 		
 		public function ApplicationModule()
 		{
@@ -45,6 +49,7 @@ package application
 			EventDispatcher.Instance().addListener( CoreMessages.AUTHORIZATION_ERROR, this);
 			
 			EventDispatcher.Instance().sendMessage( CoreMessages.APP_MODULE_INIT_COMPLETE, null );
+			EventDispatcher.Instance().addListener( CoreMessages.INIT_GAME_CORE,	this);
 		}
 		
 		public function receiveMessage(messageId:int, data:Object):void
@@ -60,6 +65,12 @@ package application
 				case CoreMessages.AUTHORIZATION_ERROR:
 				{
 					
+					break;
+				}
+					
+				case CoreMessages.INIT_GAME_CORE:
+				{
+					initializeGameCore();
 					break;
 				}
 			}
@@ -86,6 +97,14 @@ package application
 				_profileManager.setAuthorizationData( data );
 				
 				Session.getInstance().setUserProfile( _profileManager );
+			}
+		}
+		
+		private function initializeGameCore():void
+		{
+			if( !gameCore )
+			{
+				gameCore = new GameCore();
 			}
 		}
 		

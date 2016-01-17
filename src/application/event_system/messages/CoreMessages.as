@@ -8,5 +8,10 @@ package application.event_system.messages
 		
 		public static const AUTHORIZATION_COMPLETE:		int = UID.getUid();
 		public static const AUTHORIZATION_ERROR:		int = UID.getUid();
+		
+		public static const INIT_GAME_CORE:				int = UID.getUid();
+		
+		public static const GET_SHIP_LIST:				int = UID.getUid();
+		public static const SET_SHIP_LIST:				int = UID.getUid();
 	}
 }
