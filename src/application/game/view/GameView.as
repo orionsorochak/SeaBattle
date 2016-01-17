@@ -12,6 +12,8 @@ package application.game.view
 	import flash.events.MouseEvent;
 	import flash.system.ApplicationDomain;
 	import flash.text.TextField;
+	import application.game.view.components.ShipViewDescription;
+	import application.game.view.ani.CellAnimation;
 		
 	public class GameView extends Sprite
 	{

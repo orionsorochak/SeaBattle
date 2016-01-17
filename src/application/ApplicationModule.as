@@ -104,7 +104,7 @@ package application
 		{
 			if( !gameCore )
 			{
-				gameCore = new GameCore();
+//				gameCore = new GameCore();
 			}
 		}
 		

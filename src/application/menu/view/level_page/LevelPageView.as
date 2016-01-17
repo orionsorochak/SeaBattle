@@ -50,7 +50,7 @@ package application.menu.view.level_page
 		}
 		
 		private function buttonClickHandler(e:Event):void{
-			EventDispatcher.Instance().sendMessage(MenuMessages.LEVEL_BTN_CLICKED, e.target.name);	
+			EventDispatcher.Instance().sendMessage(MenuMessages.SETTINGS_BTN_CLICKED, e.target.name);	
 		}
 		
 		public function destroy():void{

@@ -1,7 +1,7 @@
 package application.game.view.player_info
 {
 	import application.game.GameController;
-	import application.game.view.ShipViewDescription;
+	import application.game.view.components.ShipViewDescription;
 	
 	import com.greensock.TweenLite;
 	

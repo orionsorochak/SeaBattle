@@ -9,5 +9,6 @@ package application.event_system.messages
 		public static var MAIN_MENU_BTN_CLICKED:	int = UID.getUid();
 		public static var LEVEL_BTN_CLICKED:		int = UID.getUid();
 		public static var PROFILE_BTN_CLICKED:		int = UID.getUid();
+		public static var SETTINGS_BTN_CLICKED:		int = UID.getUid();
 	}
 }

@@ -13,7 +13,7 @@ package application.game
 	import application.event_system.messages.GameBattleMessages;
 	import application.event_system.messages.GameMessages;
 	import application.game.view.GameView;
-	import application.game.view.ShipViewDescription;
+	import application.game.view.components.ShipViewDescription;
 	import application.game.view.TopBar;
 	import application.game.view.exit.ExitView;
 	import application.game.view.player_info.ShipLiveView;
@@ -68,7 +68,7 @@ package application.game
 			positionView = new ShipsPositionsView(gameView);
 			gameStage.addChild(positionView);						
 			
-			EventDispatcher.Instance().sendMessage(CoreMessages.GET_SHIP_LIST, null);
+//			EventDispatcher.Instance().sendMessage(CoreMessages.GET_SHIP_LIST, null);
 		}		
 		
 		private function hideTableForSetPosition():void

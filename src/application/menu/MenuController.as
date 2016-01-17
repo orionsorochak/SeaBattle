@@ -13,6 +13,8 @@ package application.menu
 	import application.menu.view.main_page.MainPageView;
 	import application.menu.view.profile.ProfilePageVariables;
 	import application.menu.view.profile.ProfilePageView;
+	import application.menu.view.settings_page.SettingsPageVariables;
+	import application.menu.view.settings_page.SettingsPageView;
 	
 	import flash.display.Sprite;
 
@@ -90,7 +92,25 @@ package application.menu
 					
 					break;
 				}
+					
+				case MainPageVariables.SETTINGS_BTN_NAME:
+				{
+					menuData.previousPage = menuData.currentPage;
+					
+					menuData.currentPage = new SettingsPageView(menuStage);
+					menuData.currentPage.show();
+					
+					break;
+				}
 			}
+		}
+		
+		private function showMainPage():void
+		{
+			menuData.previousPage = menuData.currentPage;
+			
+			menuData.currentPage = new MainPageView(menuStage);
+			menuData.currentPage.show();
 		}
 		
 		private function levelBtnClicked(buttonName:String):void{
@@ -114,11 +134,7 @@ package application.menu
 				}
 				case LevelPageVariables.BACK_BTN_NAME:{
 					
-					menuData.previousPage = menuData.currentPage;
-					
-					menuData.currentPage = new MainPageView(menuStage);
-					menuData.currentPage.show();
-					
+					showMainPage();					
 					break;
 				}
 			}
@@ -130,11 +146,19 @@ package application.menu
 				
 				case ProfilePageVariables.BACK_BTN_NAME:{
 					
-					menuData.previousPage = menuData.currentPage;
+					showMainPage();							
+					break;
+				}
+			}
+		}
+		
+		private function settingsBtnClicked(buttonName:String):void{
+			
+			switch(buttonName){
+				
+				case SettingsPageVariables.BACK_BTN_NAME:{
 					
-					menuData.currentPage = new MainPageView(menuStage);
-					menuData.currentPage.show();
-					
+					showMainPage();							
 					break;
 				}
 			}
@@ -147,6 +171,7 @@ package application.menu
 			EventDispatcher.Instance().addListener(MenuMessages.MAIN_MENU_BTN_CLICKED,  this);
 			EventDispatcher.Instance().addListener(MenuMessages.LEVEL_BTN_CLICKED,  	this);
 			EventDispatcher.Instance().addListener(MenuMessages.PROFILE_BTN_CLICKED,  	this);
+			EventDispatcher.Instance().addListener(MenuMessages.SETTINGS_BTN_CLICKED,  	this);
 		}
 		
 		public function receiveMessage(messageId:int, data:Object):void{
@@ -176,6 +201,12 @@ package application.menu
 				case MenuMessages.PROFILE_BTN_CLICKED:{
 					
 					levelBtnClicked(data as String);
+					break;
+				}					
+					
+				case MenuMessages.SETTINGS_BTN_CLICKED:{
+					
+					settingsBtnClicked(data as String);
 					break;
 				}
 			}
