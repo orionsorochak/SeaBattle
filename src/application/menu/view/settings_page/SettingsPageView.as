@@ -55,7 +55,10 @@ package application.menu.view.settings_page
 		
 		private function buttonClickHandler(e:Event):void{
 			
-			resetAllButtons();
+			if(e.target.name == SettingsPageVariables.AUDIO_BTN_NAME || e.target.name == SettingsPageVariables.LANGUAGE_BTN_NAME ||
+				e.target.name == SettingsPageVariables.SOCIAL_BTN_NAME)
+				resetAllButtons();
+			
 			if(linkToTable.getChildByName(e.target.name) is MovieClip)
 				(linkToTable.getChildByName(e.target.name) as MovieClip).gotoAndStop(2);
 			
@@ -89,6 +92,12 @@ package application.menu.view.settings_page
 				case SettingsPageVariables.SOCIAL_BTN_NAME:
 				{
 					showPopUp(SettingsPageVariables.SOCIAL_CLASS_NAME);
+					break;
+				}
+					
+				case SettingsPageVariables.BACK_BTN_NAME:
+				{
+					removePopUp();
 					break;
 				}
 			}
@@ -127,12 +136,29 @@ package application.menu.view.settings_page
 			}			
 		}
 		
+		private function removePopUp():void
+		{
+			if(linkToPrevPopUp && menuStage.contains(linkToPrevPopUp)){
+				
+				menuStage.removeChild(linkToPrevPopUp);
+				linkToPrevPopUp = null;
+			}
+			
+			if(linkToCurrentPopUp && menuStage.contains(linkToCurrentPopUp)){
+				
+				menuStage.removeChild(linkToCurrentPopUp);
+				linkToCurrentPopUp = null;
+			}
+		}
+		
 		public function destroy():void{
 			
 			if(tween){
 				tween.kill();
 				tween = null;
 			}			
+			
+			removePopUp();
 			
 			if(linkToTable && menuStage.contains(linkToTable)){
 				

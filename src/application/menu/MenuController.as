@@ -7,6 +7,7 @@ package application.menu
 	import application.event_system.messages.MenuMessages;
 	import application.event_system.messages.PreloaderMessages;
 	import application.interfaces.IModule;
+	import application.menu.view.bg_page.BgPageView;
 	import application.menu.view.level_page.LevelPageVariables;
 	import application.menu.view.level_page.LevelPageView;
 	import application.menu.view.main_page.MainPageVariables;
@@ -23,6 +24,8 @@ package application.menu
 		private var applicationStage:	Sprite;
 		private var menuStage:			Sprite;
 		private var menuData:			MenuData;
+		
+		private var menuBgView:			BgPageView;
 		
 		public function MenuController(_applicationStage:Sprite){
 			
@@ -42,8 +45,12 @@ package application.menu
 			
 			menuStage = new Sprite();
 			applicationStage.addChild(menuStage);
+			
+			menuBgView = new BgPageView(menuStage);
+			menuBgView.show();
+			
 			menuData.currentPage = new MainPageView(menuStage);
-			menuData.currentPage.show();
+			menuData.currentPage.show();			
 		}
 		
 		private function menuPageShowed(pageName:String):void{
