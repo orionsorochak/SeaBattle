@@ -13,8 +13,9 @@ package application.game
 	import application.event_system.messages.GameBattleMessages;
 	import application.event_system.messages.GameMessages;
 	import application.game.view.GameView;
-	import application.game.view.components.ShipViewDescription;
+	import application.game.view.ShipsView;
 	import application.game.view.TopBar;
+	import application.game.view.components.ShipViewDescription;
 	import application.game.view.exit.ExitView;
 	import application.game.view.player_info.ShipLiveView;
 	import application.game.view.ships_positions.ShipsPositionsView;
@@ -29,6 +30,7 @@ package application.game
 	{
 		private var applicationStage:	Sprite;
 		
+		private var shipsView:			ShipsView;
 		private var gameView:			GameView;
 		private var positionView:		ShipsPositionsView;
 		private var shipLiveView:		ShipLiveView;
@@ -46,7 +48,9 @@ package application.game
 		
 		private var gameStage:			Sprite;
 		
-		private var _gameBattleProxy		:IGameBattleProxy;
+		private var _gameBattleProxy:	IGameBattleProxy;
+		
+		private const shipsDeckList:	Vector.<uint> = new <uint>[4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
 		
 		public function GameController(_applicationStage:Sprite)
 		{
@@ -62,13 +66,17 @@ package application.game
 			gameStage = new Sprite();
 			applicationStage.addChild(gameStage);
 			
-			gameView = new GameView(this);
+			shipsView = new ShipsView(gameStage);
+			
+			gameView = new GameView(this, shipsView);
 			gameStage.addChild( gameView );
 			
-			positionView = new ShipsPositionsView(gameView);
-			gameStage.addChild(positionView);						
+			positionView = new ShipsPositionsView(gameView, shipsView);
+			gameStage.addChild(positionView);		
 			
-//			EventDispatcher.Instance().sendMessage(CoreMessages.GET_SHIP_LIST, null);
+			shipsView.toTop();
+			
+			EventDispatcher.Instance().sendMessage(CoreMessages.GET_SHIP_LIST, shipsDeckList);
 		}		
 		
 		private function hideTableForSetPosition():void
@@ -87,9 +95,6 @@ package application.game
 		private function addListenersForGame():void
 		{
 			gameView.addEventListener(GameView.SELECT_OPPONENT_CEIL, handlerSelectCeil);
-			
-//			_gameBattleProxy.dispacther.addEventListener(GameBattleMessages.GAME_UPDATED, handlerGameUpdated);
-//			_gameBattleProxy.dispacther.addEventListener(GameBattleMessages.GAME_STARTED, handlerGameStarted);
 			
 			EventDispatcher.Instance().sendMessage(GameBattleMessages.GAME_UPDATED, handlerGameUpdated);
 			EventDispatcher.Instance().sendMessage(GameBattleMessages.GAME_STARTED, handlerGameStarted);
@@ -111,7 +116,6 @@ package application.game
 		
 		private function handlerAutoArrangement(e:Event):void
 		{
-//			shipsList = _proxy.getShipsList();
 			positionView.setShipsData( shipsList );
 			
 			ShipPositionSupport.getInstance().shipsAutoArrangement(shipsList, 10, 10);
@@ -260,13 +264,12 @@ package application.game
 		
 		private function setSipLocation():void
 		{
-//			var mainApp:IMainApplicationProxy = this.facade.retrieveProxy(ProxyList.MAIN_APPLICATION_PROXY) as IMainApplicationProxy;		
-//			gameView.setShipsLocation( mainApp.getCurrentGame().getShipsList() );
+			gameView.setShipsLocation(shipsList);			
 		}
 		
 		private function setName():void
 		{
-//			gameView.setUsersData(_gameBattleProxy.getUserPlayerInfo());
+			gameView.setUsersData(/*_gameBattleProxy.getUserPlayerInfo()*/);
 		}
 		
 		private function executeBattleProxyAction():void
@@ -538,6 +541,7 @@ package application.game
 					
 					shipsList = data as Vector.<ShipData>;
 					positionView.setShipsData( shipsList );
+					
 					addListenersForSetPositions();
 					
 					break;

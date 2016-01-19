@@ -3,6 +3,8 @@ package application.game.view
 	import application.core.data.game.ShipData;
 	import application.core.data.game.ShipPositionPoint;
 	import application.game.GameController;
+	import application.game.view.ani.CellAnimation;
+	import application.game.view.components.ShipViewDescription;
 	
 	import flash.display.Bitmap;
 	import flash.display.BitmapData;
@@ -12,8 +14,6 @@ package application.game.view
 	import flash.events.MouseEvent;
 	import flash.system.ApplicationDomain;
 	import flash.text.TextField;
-	import application.game.view.components.ShipViewDescription;
-	import application.game.view.ani.CellAnimation;
 		
 	public class GameView extends Sprite
 	{
@@ -77,7 +77,7 @@ package application.game.view
 		private var column:MovieClip;
 		private var line:MovieClip;
 		
-		private var shipsContainer:MovieClip;
+		public var shipsContainer:MovieClip;
 		private var linesContainer:MovieClip;
 		private var selectedCellsViewContainer:MovieClip;
 		private var cellAnimation:CellAnimation;
@@ -95,9 +95,13 @@ package application.game.view
 		
 //		private var cellTableBitmapContainer:Array = new Array();
 		
-		public function GameView(val:GameController)
+		
+		private var shipsView:ShipsView;
+		
+		public function GameView(val:GameController, _shipsView:ShipsView)
 		{
 			gameViewMediator = val;
+			shipsView = _shipsView;
 			
 			setViewComponents();			
 		}
@@ -119,8 +123,6 @@ package application.game.view
 				_opponentField.addEventListener(MouseEvent.MOUSE_UP, handlerSelectCell);					
 			}
 			
-//			cellScale = cellSize/cellTable.width;
-			
 			classInstance = ApplicationDomain.currentDomain.getDefinition("viewPopUp") as Class;
 			
 			popUp = new classInstance();
@@ -138,11 +140,11 @@ package application.game.view
 			cellAnimation = new CellAnimation();
 			_skin.addChild(cellAnimation);	
 			
-			shipsContainer = _skin.getChildByName(SHIPS_CONTAINER) as MovieClip;
+			shipsContainer = shipsView.getShips().getChildByName(SHIPS_CONTAINER) as MovieClip;
 			
 			shipsContainer.mouseEnabled = false;			
 						
-			_skin.setChildIndex(shipsContainer, _skin.numChildren - 1);
+//			_skin.setChildIndex(shipsContainer, _skin.numChildren - 1);
 			_skin.setChildIndex(cellAnimation, _skin.numChildren - 1);
 						
 			_skin.setChildIndex(linesContainer, _skin.numChildren - 1);
@@ -508,7 +510,7 @@ package application.game.view
 			_opponentField.removeEventListener(MouseEvent.MOUSE_MOVE,  handlerSelectCellMove);
 		}
 						
-		public function setUsersData(val:Object):void
+		public function setUsersData(val:Object = null):void
 		{
 			topBar.setOpponent();
 		}
