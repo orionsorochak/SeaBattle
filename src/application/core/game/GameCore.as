@@ -33,7 +33,7 @@ package application.core.game
 			
 			for(i = 0; i < decksList.length; i++)
 			{
-				ship = new ShipData();
+				ship = new ShipData(i);
 				
 				ship.x = -10;
 				ship.y = -10;

@@ -1,5 +1,7 @@
 package application.core.data.game
 {
+	import application.event_system.components.UID;
+
 	public class ShipData
 	{
 		private static  var _globalId:			uint = 0;
@@ -13,9 +15,12 @@ package application.core.data.game
 		private var _dirrection:	uint;
 		private var _id:			uint;
 		
-		public function ShipData()
+		public function ShipData(deck:uint)
 		{
 			_x = _y = _deck = 0;
+			
+			_id = UID.getUid();
+			_deck = deck;
 			
 			_coordinates = new Vector.<ShipPositionPoint>
 		}

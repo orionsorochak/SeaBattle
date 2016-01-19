@@ -4,8 +4,10 @@ package application
 	import application.core.data.Session;
 	import application.core.data.profile.UserProfileManager;
 	import application.core.game.GameCore;
+	import application.core.game.GameManager;
 	import application.core.interfaces.IAuthManager;
 	import application.core.interfaces.IAuthUserData;
+	import application.core.interfaces.IGameManager;
 	import application.event_system.EventDispatcher;
 	import application.event_system.messages.ApplicationMessages;
 	import application.event_system.messages.CoreMessages;
@@ -20,7 +22,7 @@ package application
 		private var _authManager:		IAuthManager;
 		
 		private var _profileManager:	UserProfileManager;
-		private var gameCore:			GameCore;
+		private var _gameManager:		GameManager;
 		
 		public function ApplicationModule()
 		{
@@ -70,7 +72,6 @@ package application
 					
 				case CoreMessages.INIT_GAME_CORE:
 				{
-					initializeGameCore();
 					break;
 				}
 			}
@@ -87,6 +88,11 @@ package application
 			return _authManager;
 		}
 		
+		public function getGameManager():IGameManager
+		{
+			return _gameManager;
+		}
+		
 		
 		
 		private function initializeApplicationModules(data:IAuthUserData):void
@@ -98,15 +104,12 @@ package application
 				
 				Session.getInstance().setUserProfile( _profileManager );
 			}
-		}
-		
-		private function initializeGameCore():void
-		{
-			if( !gameCore )
+			
+			if( !_gameManager )
 			{
-//				gameCore = new GameCore();
+				_gameManager = new GameManager();
+				Session.getInstance().setGameManager( _gameManager );
 			}
 		}
-		
 	}
 }

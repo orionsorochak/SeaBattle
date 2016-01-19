@@ -1,5 +1,6 @@
 package application.core.data
 {
+	import application.core.interfaces.IGameManager;
 	import application.core.interfaces.IUserProfile;
 
 	public class Session
@@ -7,6 +8,7 @@ package application.core.data
 		private static var _instance:		Session;
 		
 		private var _userProfile:		IUserProfile;
+		private var _gameManager:		IGameManager;
 		
 		public function Session()
 		{
@@ -30,6 +32,17 @@ package application.core.data
 		public function getUserProfile():IUserProfile
 		{
 			return _userProfile;
+		}
+		
+		
+		public function setGameManager(value:IGameManager):void
+		{
+			_gameManager = value;
+		}
+		
+		public function getGameManager():IGameManager
+		{
+			return _gameManager;
 		}
 	}
 }
