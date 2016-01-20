@@ -1,5 +1,6 @@
 package application
 {
+	import application.core.game.GameCore;
 	import application.event_system.EventDispatcher;
 	import application.event_system.messages.ApplicationMessages;
 	import application.event_system.messages.CoreMessages;
@@ -27,6 +28,8 @@ package application
 		private var menuController:			MenuController;
 		private var gameController:			GameController;
 		
+		private var gameCore:GameCore;
+		
 		public function ApplicationController(_linkToEnterPoint:SeaBattle){
 			
 			linkToEnterPoint = _linkToEnterPoint;
@@ -49,7 +52,9 @@ package application
 			loaderResources = new LoaderResorses();
 			loaderResources.load();
 			
-			preloaderController = new PreloaderController(applicationStage);*/			
+			preloaderController = new PreloaderController(applicationStage);*/		
+			
+			gameCore = new GameCore();
 		}
 		
 		private function startupApplication():void

@@ -22,7 +22,7 @@ package application.core.game
 		
 		private function showGame():void
 		{
-			generateShipList();
+//			generateShipList();
 		}		
 		
 		private function generateShipList(decksList:Vector.<uint> = null):void
@@ -33,7 +33,7 @@ package application.core.game
 			
 			for(i = 0; i < decksList.length; i++)
 			{
-				ship = new ShipData(i);
+				ship = new ShipData();
 				
 				ship.x = -10;
 				ship.y = -10;
@@ -68,7 +68,8 @@ package application.core.game
 				}
 					
 				case CoreMessages.GET_SHIP_LIST:{
-					
+							
+					generateShipList(data as Vector.<uint>);
 					getShipsList();
 					break;
 				}

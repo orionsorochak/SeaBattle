@@ -9,6 +9,8 @@ package application.core.game.p_vs_computer
 		private var _shipList:		Vector.<ShipData>;
 		private var _difficult:		uint;
 		
+		private const shipsDeckList:	Vector.<uint> = new <uint>[4, 3, 3, 2, 2, 2, 1, 1, 1, 1];
+		
 		public function GameVSComputerLoader()
 		{
 			initializeShipList();
@@ -38,6 +40,22 @@ package application.core.game.p_vs_computer
 		
 		private function initializeShipList():void
 		{
+			_shipList = new Vector.<ShipData>(shipsDeckList.length, true);
+			
+			var i:int, ship:ShipData;
+			
+			for(i = 0; i < _shipList.length; i++)
+			{
+				ship = new ShipData();
+				
+				ship.x = -10;
+				ship.y = -10;
+				
+				ship.deck = shipsDeckList[i];
+				_shipList[i] =  ship ;
+			}
+			
+			/*
 			_shipList = new Vector.<ShipData>(10, true);
 			_shipList[0] = new ShipData(4);
 			
@@ -51,7 +69,7 @@ package application.core.game.p_vs_computer
 			_shipList[6] = new ShipData(1);
 			_shipList[7] = new ShipData(1);
 			_shipList[8] = new ShipData(1);
-			_shipList[9] = new ShipData(1);
+			_shipList[9] = new ShipData(1);*/
 		}
 	}
 }

@@ -15,12 +15,10 @@ package application.core.data.game
 		private var _dirrection:	uint;
 		private var _id:			uint;
 		
-		public function ShipData(deck:uint)
+		public function ShipData()
 		{
+//			_id = UID.getUid();
 			_x = _y = _deck = 0;
-			
-			_id = UID.getUid();
-			_deck = deck;
 			
 			_coordinates = new Vector.<ShipPositionPoint>
 		}
